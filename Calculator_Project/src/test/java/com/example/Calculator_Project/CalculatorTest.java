@@ -1,8 +1,43 @@
 package com.example.Calculator_Project;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculatorTest {
+
+    // Lớp Calculator được sửa đổi để hỗ trợ số thập phân
+    static class Calculator {
+        public int add(int a, int b) {
+            return a + b;
+        }
+
+        public double add(double a, double b) {
+            return a + b;
+        }
+
+        public int subtract(int a, int b) {
+            return a - b;
+        }
+
+        public double subtract(double a, double b) {
+            return a - b;
+        }
+
+        public int multiply(int a, int b) {
+            return a * b;
+        }
+
+        public double multiply(double a, double b) {
+            return a * b;
+        }
+
+        public double divide(int a, int b) {
+            if (b == 0) {
+                throw new IllegalArgumentException("Division by zero is not allowed");
+            }
+            return (double) a / b;
+        }
+    }
 
     @Test
     public void testAdd() {
@@ -39,5 +74,31 @@ public class CalculatorTest {
         // Test ngoại lệ khi chia cho 0
         assertThrows(IllegalArgumentException.class, () -> calculator.divide(4, 0));
     }
-}
 
+    @Test
+    public void testAdditionWithNegativeNumbers() {
+        Calculator calculator = new Calculator();
+        assertEquals(-5, calculator.add(-2, -3));
+        assertEquals(1, calculator.add(-2, 3));
+    }
+
+    @Test
+    public void testSubtractionWithLargeNumbers() {
+        Calculator calculator = new Calculator();
+        assertEquals(999999, calculator.subtract(1000000, 1));
+        assertEquals(-999999, calculator.subtract(-1000000, -1));
+    }
+
+    @Test
+    public void testMultiplicationWithDecimals() {
+        Calculator calculator = new Calculator();
+        assertEquals(6.25, calculator.multiply(2.5, 2.5), 0.0001);
+    }
+
+    @Test
+    public void testAdditionWithDecimals() {
+        Calculator calculator = new Calculator();
+        assertEquals(5.5, calculator.add(2.5, 3.0), 0.0001);
+        assertEquals(-0.5, calculator.add(-2.5, 2.0), 0.0001);
+    }
+}
